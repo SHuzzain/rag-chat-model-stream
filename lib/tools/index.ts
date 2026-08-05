@@ -4,7 +4,7 @@ import { createSearchKnowledgeBaseTool } from "./search-knowledge-base"
 
 export function createAllTools() {
   return {
-    searchKnowledgeBase: createSearchKnowledgeBaseTool(),
+    searchKnowledgeBase: createSearchKnowledgeBaseTool({ topK: 5 }),
 
     // TODO: Uncomment when FSM API is configured
     fsmTicket: createFSMTicketTool(),

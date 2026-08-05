@@ -7,6 +7,7 @@ import { ChatHeader } from "./chat-header";
 import { ChatMessages } from "./chat-messages";
 import { ChatInput } from "./chat-input";
 import { useChatBot } from "./use-chat-bot";
+import ChatSuggestions from "./chat-suggestions";
 
 /**
  * Main ChatBot component — composes header, messages, and input.
@@ -21,6 +22,11 @@ export function ChatBot() {
         <Card className="mx-auto h-[calc(100dvh-2rem)] w-full max-w-2xl gap-0">
           <ChatHeader disabled={isBusy} />
           <ChatMessages messages={messages} isBusy={isBusy} />
+          <ChatSuggestions
+            messages={messages}
+            isBusy={isBusy}
+            onSendMessage={sendMessage}
+          />
           <ChatInput
             status={status}
             isBusy={isBusy}

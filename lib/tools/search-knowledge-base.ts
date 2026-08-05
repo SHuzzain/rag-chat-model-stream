@@ -3,12 +3,12 @@ import z from "zod"
 import { generateEmbedding } from "../embeddings"
 import { ragSearch } from "../rag-search"
 
-/**
- * Tool: Search the knowledge base using vector similarity.
- * The agent calls this to retrieve relevant document chunks
- * before answering the user's question.
- */
-export function createSearchKnowledgeBaseTool() {
+
+interface SearchKnowledgeBaseType {
+  topK?: number
+}
+
+export function createSearchKnowledgeBaseTool({ topK = 5 }: SearchKnowledgeBaseType) {
   return tool({
     description:
       "Search the knowledge base for relevant information. Use this tool to find context before answering any user question. Always search first before responding.",
@@ -24,8 +24,9 @@ export function createSearchKnowledgeBaseTool() {
       const embedding = await generateEmbedding(query)
       const results = await ragSearch({
         queryEmbedding: embedding,
-        topK: 5,
+        topK,
       })
+      console.log({ results })
       return results.map((r) => ({
         text: r.text,
         source: r.source,

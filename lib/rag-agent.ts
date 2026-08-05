@@ -32,5 +32,5 @@ export async function streamRAGAgent({
     stopWhen: isStepCount(3),
   })
 
-  return result.stream
+  return result
 }

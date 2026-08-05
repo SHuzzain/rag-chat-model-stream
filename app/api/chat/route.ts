@@ -1,5 +1,6 @@
+import { generateSuggestions } from "@/actions/suggestion"
 import { streamRAGAgent } from "@/lib/rag-agent"
-import { createUIMessageStreamResponse, toUIMessageStream, UIMessage } from "ai"
+import { createUIMessageStream, createUIMessageStreamResponse, toUIMessageStream, UIMessage } from "ai"
 import { NextResponse, type NextRequest } from "next/server"
 
 type ChatRequest = {
@@ -21,14 +22,41 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const stream = await streamRAGAgent({
-      lastMessage,
-      conversationHistory: messages,
-      signal: request.signal,
-    })
+
 
     return createUIMessageStreamResponse({
-      stream: toUIMessageStream({ stream }),
+      stream: createUIMessageStream({
+        execute: async ({ writer }) => {
+          const result = await streamRAGAgent({
+            lastMessage,
+            conversationHistory: messages,
+            signal: request.signal,
+          })
+
+          writer.merge(toUIMessageStream({ stream: result.stream }));
+
+          const answer = await result.text;
+
+          if (answer && answer.trim().length > 0) {
+            try {
+              writer.write({
+                type: "data-suggestions-loading",
+                data: "loading"
+              });
+              const suggestions = await generateSuggestions(
+                lastMessage,
+                answer
+              );
+              writer.write({
+                type: "data-suggestions",
+                data: suggestions
+              });
+            } catch (err) {
+              console.error("[RAG API] Error generating suggestions:", err);
+            }
+          }
+        }
+      })
     })
   } catch (error) {
     console.error("[RAG API] Error:", error)

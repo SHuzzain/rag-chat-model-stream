@@ -46,6 +46,8 @@ function getRunningTool(message: UIMessage) {
   });
 }
 
+
+
 export function MessageAnimated({
   message,
   scrollAnchor = false,
@@ -84,8 +86,8 @@ export function MessageAnimated({
             </AvatarFallback>
           </Avatar>
         </MessageAvatar>
-
         <MessageContent>
+
 
           {runningTool && (
             <Marker role="status">
@@ -100,8 +102,8 @@ export function MessageAnimated({
             </Marker>
           )}
 
-          {getToolParts(message).map((tool: any) => (
-            <Marker key={tool.type}>
+          {getToolParts(message).map((tool: any, index: number) => (
+            <Marker key={tool.toolCallId || `${tool.type}-${index}`}>
               <MarkerIcon>
                 <WrenchIcon className="size-3" />
               </MarkerIcon>
