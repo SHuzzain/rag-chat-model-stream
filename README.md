@@ -1,3 +1,5 @@
+# rag-chat-model-stream
+rag-chat-model-stream
 # Next.js template
 
 This is a Next.js template with shadcn/ui.
