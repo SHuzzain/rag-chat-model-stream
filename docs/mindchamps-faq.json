@@ -1,0 +1,222 @@
+[
+    {
+        "topic": "Payments",
+        "question": "How can I pay my fees?",
+        "answer": "Refer to the official payment instructions on the MindFORCE website. Payments must be made on or before the due date. For an extension or special arrangements, send a formal email (with name and student ID) to advisor@mindforceacademy.edu.sg; requests are assessed case-by-case."
+    },
+    {
+        "topic": "Outstanding Fees & Instalments",
+        "question": "What would happen if I cannot make payment as per due date?",
+        "answer": "You can request the Academic Advisor for a deferred due date, partial payment, or other special arrangements. All requests must be approved by Management and are not automatically granted. If approved, you'll receive the arrangement and revised deadline in writing; if declined, you must pay the full amount by the given deadline. Requests may be cancelled if you don't respond to follow-ups."
+    },
+    {
+        "topic": "Outstanding Fees & Instalments",
+        "question": "Do I need to pay before attending class?",
+        "answer": "Yes. Overdue fees should be cleared before class starts. The School will reach out for any outstanding fees before the class commences."
+    },
+    {
+        "topic": "Accessing Your Course on ChampsLMS",
+        "question": "What is ChampsLMS and how do I log in?",
+        "answer": "ChampsLMS is where you access course materials, join live classes, and submit assessments. Go to devmindforce.champslms.com and use the login details emailed from ChampsLMS (check spam/junk). Go to the 'Classes' page to find your course. If you can't find it, email opsteam@mindforceacademy.edu.sg."
+    },
+    {
+        "topic": "Accessing Your Course on ChampsLMS",
+        "question": "What device or browser should I use? Can I download lecture slides?",
+        "answer": "Any device works for general use; for assessments use a laptop or desktop with a stable internet connection. Lecture slides cannot be downloaded (to protect intellectual property), but you can keep the course outline and learner's guide for WSQ courses."
+    },
+    {
+        "topic": "Accessing Your Course on ChampsLMS",
+        "question": "How do I access my digital course materials?",
+        "answer": "Access the LMS for Course Outline, Lesson Slides, Quizzes, Assignments and Assessments. Access Cengage MindTap for your eBook and self-learning exercises (Asynchronous E-learning). If your eBook is not under Cengage, contact opsteam@mindforceacademy.edu.sg."
+    },
+    {
+        "topic": "Accessing Your Course on ChampsLMS",
+        "question": "Who do I contact for ChampsLMS problems?",
+        "answer": "Email ChampsLMS Support at support@champslms.com and CC opsteam@mindforceacademy.edu.sg, including a description of the issue and available screenshots."
+    },
+    {
+        "topic": "Accessing Your Course on ChampsLMS",
+        "question": "What delivery modes are used?",
+        "answer": "Modules may be online (via ChampsLMS) or face-to-face. The venue or mode is stated in your commencement email."
+    },
+    {
+        "topic": "Accessing Your Course on ChampsLMS",
+        "question": "How do I join an online class?",
+        "answer": "Classes are conducted via Zoom inside the LMS. Log in, go to your course, click 'Lessons', then click 'Join Room' at the scheduled time. If you can't get in, email support@champslms.com and CC opsteam@mindforceacademy.edu.sg with a description and screenshots."
+    },
+    {
+        "topic": "Accessing Your Course on ChampsLMS",
+        "question": "Do I need to complete surveys?",
+        "answer": "Yes, it is required. After each WSQ module ends, you must complete post-course surveys from SWDA and MindFORCE Academy, available through ChampsLMS."
+    },
+    {
+        "topic": "Taking Attendance",
+        "question": "How is attendance taken? What is the window?",
+        "answer": "For SWDA-funded programmes, you scan a QR code using Singpass. You can request the trainer to generate the attendance code or a link to generate your own attendance QR. If late, take attendance as soon as you arrive, and ensure Singpass is installed and updated before your first class."
+    },
+    {
+        "topic": "Taking Attendance",
+        "question": "What if I can't scan the QR code or get an error?",
+        "answer": "Request your trainer for an attendance link to scan on your own. After SingPass verification, navigate back to the browser page to review and submit attendance until 'Attendance is taken successfully' appears. If it's a technical issue, screenshot the error and email opsteam@mindforceacademy.edu.sg; you won't be penalised for genuine technical failures."
+    },
+    {
+        "topic": "Taking Attendance",
+        "question": "What if Singpass e-attendance fails due to a technical issue?",
+        "answer": "Take a screenshot of the error and email opsteam@mindforceacademy.edu.sg. You will not be penalised for genuine technical failures (e.g. SingPass islandwide disruption, network outages at the venue, repeated login errors)."
+    },
+    {
+        "topic": "Taking Attendance",
+        "question": "What is the minimum attendance for WSQ modules?",
+        "answer": "75% attendance is required for eligibility to sit the assessment. You must also pass as 'Competent' for the module to be eligible for WSQ subsidies. You are responsible for ensuring attendance is correctly recorded, including live sessions, e-attendance via Singpass, and e-learning scans."
+    },
+    {
+        "topic": "Taking Attendance",
+        "question": "What if I'm a foreigner and do not have access to the SingPass app?",
+        "answer": "Foreign trainees without Singpass are not required to scan the enhanced QR code for attendance, though those with a FIN number and Singpass can still scan. For online course runs, the LMS automatically records attendance; for face-to-face runs, you'll be asked to fill in a manual attendance record."
+    },
+    {
+        "topic": "Taking Attendance",
+        "question": "What if I miss classes?",
+        "answer": "Email opsteam@mindforceacademy.edu.sg to inform staff of your absence. Class recordings may be available depending on the course. There are no make-up lessons for missed sessions; rescheduling WSQ assessments may incur a fee and must be requested 2 days prior to the assessment date. For WSQ modules, not meeting the 75% attendance requirement bars you from the assessment, though appeals may be submitted case-by-case."
+    },
+    {
+        "topic": "Taking Attendance",
+        "question": "What if I have low attendance due to valid reasons?",
+        "answer": "Inform the school as early as possible before class starts by emailing opsteam@mindforceacademy.edu.sg, and provide supporting documents where applicable (e.g. a valid MC for medical reasons). Failure to provide documents may result in the absence being treated as unsupported."
+    },
+    {
+        "topic": "Assessments",
+        "question": "How do I take and submit an online assessment? Can I submit late?",
+        "answer": "Complete online assessments using a laptop or desktop with a stable internet connection, logging in early to ChampsLMS. Responses save automatically, but late submissions are not accepted—the timer runs from the scheduled start time, so late starts only get the remaining time, with no extensions."
+    },
+    {
+        "topic": "Assessments",
+        "question": "Can overdue fees affect my ability to sit for WSQ assessments?",
+        "answer": "Yes. Assessments taken while fees are overdue may not be recognised, and you may be barred from assessments until fees are settled."
+    },
+    {
+        "topic": "Assessments",
+        "question": "What happens after a WSQ course ends? What does 'Not Yet Competent' mean?",
+        "answer": "The academy advises on certificate eligibility and how to retrieve your WSQ eCertificate if you passed. If assessed as Not Yet Competent, you can retake the module at the next available intake; contact advisor@mindforceacademy.edu.sg to discuss."
+    },
+    {
+        "topic": "MindTap (eBook & Course Materials)",
+        "question": "What is MindTap?",
+        "answer": "MindTap is Cengage's digital learning platform giving access to your eBook and self-learning assignments (Asynchronous eLearning). Access codes and instructions are provided by the Operations team after enrolment and ebook payment are confirmed, via an email titled 'MindTap Access Details'."
+    },
+    {
+        "topic": "MindTap (eBook & Course Materials)",
+        "question": "I redeemed my code but my eBook still shows a 14-day trial. What do I do?",
+        "answer": "Check that you redeemed both the access key and course key sent by Operations, with no extra spaces. If it still doesn't work, email sg.hedtechsupport@cengage.com and CC opsteam@mindforceacademy.edu.sg."
+    },
+    {
+        "topic": "MindTap (eBook & Course Materials)",
+        "question": "Can I get a refund for my eBook?",
+        "answer": "No — once paid, eBook payments are not refundable."
+    },
+    {
+        "topic": "MindTap (eBook & Course Materials)",
+        "question": "Are course material fees compulsory or optional?",
+        "answer": "Some are compulsory (e.g. certain eBooks) and some are optional (e.g. printed learner's guides). Payments for multiple materials can be combined. Refunds for printed guides may not be allowed depending on school policy, and eBooks are never refundable."
+    },
+    {
+        "topic": "MindTap (eBook & Course Materials)",
+        "question": "When will I receive or be able to collect my course materials?",
+        "answer": "Usually before or by the first day of class, provided materials were paid at least 7 days in advance. eBooks (Cengage MindTap) are sent via email about 1 week before the course starts. Printed Learner's Guides are collected via a booking link sent in the Course Commencement email 1 week before the course, for collection at the office."
+    },
+    {
+        "topic": "SFC, PSEA & SWDA Grants",
+        "question": "Are WSQ payments refundable if I withdraw?",
+        "answer": "No. Withdrawing may mean losing subsidy eligibility, non-refundable SkillsFuture Credit usage, and full PSEA deduction. Changing your schedule or delaying completion can also affect your subsidy."
+    },
+    {
+        "topic": "SFC, PSEA & SWDA Grants",
+        "question": "How do I submit a SkillsFuture Credit (SFC) claim?",
+        "answer": "Log in to MySkillsFuture via Singpass, select 'Submit SkillsFuture Credit Claim', search for your course and select the correct run dates, enter payment details and upload the official invoice, then agree to SWDA terms and submit. Claims must be submitted before course commencement; send a screenshot with your Claim ID to the academy to match it to your record."
+    },
+    {
+        "topic": "SFC, PSEA & SWDA Grants",
+        "question": "What if I have problems with my SFC claim?",
+        "answer": "Check the status on the SkillsFuture portal, then contact the academy's admin team at opsteam@mindforceacademy.edu.sg or WhatsApp +65 6828 2603."
+    },
+    {
+        "topic": "SFC, PSEA & SWDA Grants",
+        "question": "Should I contact MySkillsFuture for diploma transcript issues?",
+        "answer": "No. MySkillsFuture and SWDA only handle WSQ modular certificates (or SOAs). For diploma transcripts and letters of completion, contact your Course Advisor at advisor@mindforceacademy.edu.sg."
+    },
+    {
+        "topic": "SFC, PSEA & SWDA Grants",
+        "question": "I received an e-notification to authorise the request for course fee deduction in MOE Student Finance System (SFS). What should I do?",
+        "answer": "Log in to SFS (studentfinance.moe.gov.sg) using Singpass, find the request under 'My Pending Action', view details, and click 'Authorise' after verifying they're correct. The required funds are reserved from your PSEA (viewable under PSEA > Account Overview > Pending Deduction) and deducted once you start the course. You must authorise within 10 calendar days, or the request expires and is automatically rejected."
+    },
+    {
+        "topic": "SFC, PSEA & SWDA Grants",
+        "question": "I missed the due date for authorising the course deductions. What can I do?",
+        "answer": "No course fee deductions will be made from your PSEA since the due date was missed. If you'd still like to use PSEA funds, contact MindFORCE Academy before your course start date."
+    },
+    {
+        "topic": "SFC, PSEA & SWDA Grants",
+        "question": "I am using my sibling's PSEA in addition to my PSEA to pay for my course fees. When will my sibling receive the e-notification?",
+        "answer": "Once the training provider submits the withdrawal request, an e-notification is sent to you and your sibling at the same time. Both must authorise the request within 10 calendar days from the notification date."
+    },
+    {
+        "topic": "SFC, PSEA & SWDA Grants",
+        "question": "My sibling missed the due date and did not authorise the request for course fee deduction in time. Will funds be deducted from my PSEA?",
+        "answer": "No, funds will not be deducted, because SFS could not deduct funds in the sequence specified in your withdrawal request. Review your withdrawal instructions and contact MindFORCE Academy if you'd still like to use PSEA for course fees."
+    },
+    {
+        "topic": "SFC, PSEA & SWDA Grants",
+        "question": "I am below 21 years old. Can I authorise the PSEA course fees deduction?",
+        "answer": "No, you will require your parents/guardians to authorise on your behalf instead."
+    },
+    {
+        "topic": "Student Status & Withdrawal",
+        "question": "Will I get a Student ID? When and how?",
+        "answer": "Yes. It's issued after enrolment is processed and sent by email, usually with your welcome information. Your Welcome Letter includes your Student ID, first module name, commencement date, and next steps — always include your Student ID in official communications."
+    },
+    {
+        "topic": "Student Status & Withdrawal",
+        "question": "What is an enrolment or acceptance letter?",
+        "answer": "It's an official document confirming your admission into a programme. If you can't locate your copy, contact the academy. Students must also complete all required enrolment documents, including the student contract, before commencing their programme."
+    },
+    {
+        "topic": "Study Plan & Module Management",
+        "question": "How do I receive or update my study plan? What if my class schedule clashes?",
+        "answer": "Your study plan outlines your module schedule and delivery mode. Email advisor@mindforceacademy.edu.sg with your full name and Student ID for a copy or to request module changes. For timetable clashes, the Course Advisor reviews the situation and may propose a revised study plan, which you must confirm before it takes effect."
+    },
+    {
+        "topic": "Study Plan & Module Management",
+        "question": "Can I change my modules after enrolment?",
+        "answer": "Yes. Contact your Academic Advisor to discuss, stating your current module, the module you want to change to, and any relevant academic considerations. Module changes are subject to availability and academic policies, and may affect tuition fees, subsidy eligibility, programme duration, or graduation timelines."
+    },
+    {
+        "topic": "Study Plan & Module Management",
+        "question": "Can my study plan, module schedule, or module allocation change?",
+        "answer": "Yes. These may change due to operational, academic, or regulatory requirements. You'll be notified and, where applicable, issued an updated study plan. Only modules listed in your signed fee breakdown are guaranteed; contact advisor@mindforceacademy.edu.sg if you believe a module is missing."
+    },
+    {
+        "topic": "Study Plan & Module Management",
+        "question": "What do I need to know about WSQ module registration and enrolment?",
+        "answer": "WSQ modules require separate registration. About one month before the module commencement date, you'll receive an email with registration instructions, which must be completed before the stated deadline to secure your attendance."
+    },
+    {
+        "topic": "WSQ Certificates",
+        "question": "How do I get my WSQ eCertificate after passing?",
+        "answer": "Log in to MySkillsFuture using Singpass or Portal ID, find your certificate in OpenCerts, and save it as a PDF."
+    },
+    {
+        "topic": "WSQ Certificates",
+        "question": "Are WSQ certificates issued immediately after I finish?",
+        "answer": "No. They are only available after results are finalised and updated in MySkillsFuture. Download and save your certificate as soon as available; look for an 'End of Course' email detailing the retrieval steps."
+    },
+    {
+        "topic": "WSQ Certificates",
+        "question": "Will changes to my personal details affect my SkillsFuture account?",
+        "answer": "Yes. Keep your email address accurate and up to date in both the academy's records and your MySkillsFuture profile to avoid issues with claims."
+    },
+    {
+        "topic": "WSQ Certificates",
+        "question": "Is certificate retrieval different for local and foreign trainees?",
+        "answer": "Yes. Singapore Citizens and PRs log in via Singpass on MySkillsFuture, while foreign trainees use a Portal ID or other identity verification. You can request to update your registered email if needed; look for the 'End of Course' email for retrieval steps."
+    }
+]
