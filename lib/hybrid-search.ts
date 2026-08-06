@@ -9,10 +9,9 @@ export type HybridSearchResult = {
   sourceType: string
   chunkIndex: number
   metaData: unknown
-  // vectorScore: number
-  // textScore: number
-  // combinedScore: number
-  score: number
+  vectorScore: number
+  textScore: number
+  combinedScore: number
 }
 
 /**
@@ -39,17 +38,17 @@ export async function hybridSearch({
 }): Promise<HybridSearchResult[]> {
   const textWeight = 1 - vectorWeight
 
-  // // -- pgvector cosine similarity score: 1 - cosineDistance => [0, 1]
-  // const vectorSimilarity = sql<number>`1 - (${cosineDistance(embeddingDocumentTable.embedding, queryEmbedding)})`
+  // -- pgvector cosine similarity score: 1 - cosineDistance => [0, 1]
+  const vectorSimilarity = sql<number>`1 - (${cosineDistance(embeddingDocumentTable.embedding, queryEmbedding)})`
 
-  // // -- tsvector full-text rank score
-  // const textRank = sql<number>`ts_rank_cd(to_tsvector('simple', ${embeddingDocumentTable.text}), websearch_to_tsquery('simple', ${queryText}))`
+  // -- tsvector full-text rank score
+  const textRank = sql<number>`ts_rank_cd(to_tsvector('simple', ${embeddingDocumentTable.text}), websearch_to_tsquery('simple', ${queryText}))`
 
-  // // -- Combined weighted score
-  // const combinedScore = sql<number>`(
-  //   ${vectorWeight} * (1 - (${cosineDistance(embeddingDocumentTable.embedding, queryEmbedding)}))
-  //   + ${textWeight} * ts_rank_cd(to_tsvector('simple', ${embeddingDocumentTable.text}), websearch_to_tsquery('simple', ${queryText}))
-  // )`
+  // -- Combined weighted score
+  const combinedScore = sql<number>`(
+    ${vectorWeight} * (1 - (${cosineDistance(embeddingDocumentTable.embedding, queryEmbedding)}))
+    + ${textWeight} * ts_rank_cd(to_tsvector('simple', ${embeddingDocumentTable.text}), websearch_to_tsquery('simple', ${queryText}))
+  )`
 
   const similarityScore = sql<number>`${cosineDistance(embeddingDocumentTable.embedding, queryEmbedding)}`;
 
@@ -61,13 +60,11 @@ export async function hybridSearch({
       sourceType: embeddingDocumentTable.sourceType,
       chunkIndex: embeddingDocumentTable.chunkIndex,
       metaData: embeddingDocumentTable.metaData,
-      // vectorScore: vectorSimilarity,
-      // textScore: textRank,
-      // combinedScore: combinedScore,
-      score: similarityScore,
+      vectorScore: vectorSimilarity,
+      textScore: textRank,
+      combinedScore: combinedScore,
     })
     .from(embeddingDocumentTable)
-    // .orderBy(desc(combinedScore))
     .orderBy(asc(similarityScore))
     .limit(topK)
 
@@ -78,9 +75,8 @@ export async function hybridSearch({
     sourceType: row.sourceType,
     chunkIndex: row.chunkIndex,
     metaData: row.metaData,
-    // vectorScore: Number(row.vectorScore),
-    // textScore: Number(row.textScore),
-    // combinedScore: Number(row.combinedScore),
-    score: Number(row.score),
+    vectorScore: Number(row.vectorScore),
+    textScore: Number(row.textScore),
+    combinedScore: Number(row.combinedScore),
   }))
 }

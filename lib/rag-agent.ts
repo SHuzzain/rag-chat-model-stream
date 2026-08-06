@@ -53,7 +53,7 @@ function createSearchTool(vectorWeight: number) {
       return additionalResults.map((r) => ({
         text: r.text,
         source: r.source,
-        score: r.score,
+        score: r.combinedScore,
       }))
     },
   })
@@ -171,38 +171,38 @@ export async function streamRAGAgent({
   // Steps 1-6 are identical to runRAGAgent
   let searchQuery = lastMessage
 
-  // if (enableQueryRewrite && conversationHistory && conversationHistory.length > 0) {
-  //   searchQuery = await rewriteQuery(lastMessage, conversationHistory)
-  // }
+  if (enableQueryRewrite && conversationHistory && conversationHistory.length > 0) {
+    searchQuery = await rewriteQuery(lastMessage, conversationHistory)
+  }
 
-  // const queryEmbedding = await generateEmbedding(searchQuery)
+  const queryEmbedding = await generateEmbedding(searchQuery)
 
-  // const searchResults = await hybridSearch({
-  //   queryText: searchQuery,
-  //   queryEmbedding,
-  //   topK: searchTopK,
-  //   vectorWeight,
-  // })
+  const searchResults = await hybridSearch({
+    queryText: searchQuery,
+    queryEmbedding,
+    topK: searchTopK,
+    vectorWeight,
+  })
 
-  // if (searchResults.length === 0) {
-  //   // Return a simple stream with "no results" message
-  //   return new ReadableStream({
-  //     start(controller) {
-  //       controller.enqueue(
-  //         new TextEncoder().encode(
-  //           "I couldn't find any relevant information in the knowledge base to answer your question."
-  //         )
-  //       )
-  //       controller.close()
-  //     },
-  //   })
-  // }
+  if (searchResults.length === 0) {
+    // Return a simple stream with "no results" message
+    return new ReadableStream({
+      start(controller) {
+        controller.enqueue(
+          new TextEncoder().encode(
+            "I couldn't find any relevant information in the knowledge base to answer your question."
+          )
+        )
+        controller.close()
+      },
+    })
+  }
 
-  // const rerankedChunks = await rerankChunks(searchQuery, searchResults, rerankTopK)
+  const rerankedChunks = await rerankChunks(searchQuery, searchResults, rerankTopK)
 
   const messages = await buildRAGMessages({
     lastMessage,
-    contextChunks: [],
+    contextChunks: rerankedChunks,
     systemInstruction,
     conversationHistory,
   })
