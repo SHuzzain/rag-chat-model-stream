@@ -1,7 +1,7 @@
 import { streamText, isStepCount, UIMessage } from "ai"
 import { openai } from "@ai-sdk/openai"
-import { buildRAGMessages } from "./prompt-builder"
-import { createAllTools } from "./tools"
+import { buildRAGMessages } from "../prompt/prompt-builder"
+import { createAllTools } from "../tools"
 
 export type RAGAgentOptions = {
   lastMessage: string

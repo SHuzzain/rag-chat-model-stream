@@ -2,9 +2,9 @@
 import { generateEmbeddings } from "@/lib/embeddings"
 import db from "@/connector/db.drizzle"
 import { embeddingDocumentTable, EmbeddingDocumentType, EmbeddingDocumentSchema } from "@/schema"
-import { loadScrapedData } from "../lib/scrape-page-url"
+import { loadScrapedData } from "./scrape-page-url"
 // import { loadDocTextFile } from "../lib/extract-text-file"
-import { loadJsonFile } from "@/lib/extract-text-json"
+import { loadJsonFile } from "@/actions/chunk-load/extract-text-json"
 import fs from "fs"
 
 

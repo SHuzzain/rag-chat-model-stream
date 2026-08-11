@@ -2,7 +2,7 @@ import { generateText, Output } from "ai";
 import { openai } from "@ai-sdk/openai";
 import { z } from "zod";
 import { generateEmbedding } from "@/lib/embeddings";
-import { ragSearch } from "@/lib/rag-search";
+import { ragSearch } from "@/actions/rag-search";
 
 const SuggestionSchema = z.object({
     suggestions: z.array(z.string()).max(3),

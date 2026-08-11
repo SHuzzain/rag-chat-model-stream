@@ -1,7 +1,7 @@
 import { tool } from "ai"
 import z from "zod"
 import { generateEmbedding } from "../embeddings"
-import { ragSearch } from "../rag-search"
+import { ragSearch } from "../../actions/rag-search"
 
 
 interface SearchKnowledgeBaseType {

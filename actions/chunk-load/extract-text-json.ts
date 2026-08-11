@@ -2,7 +2,7 @@
 import { EmbeddingDocumentType } from "@/schema"
 import fs from "fs"
 import path from "path"
-import { createHash } from "./utils"
+import { createHash } from "../../lib/utils"
 
 export async function loadJsonFile() {
     try {

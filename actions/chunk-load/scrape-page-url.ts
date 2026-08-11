@@ -1,7 +1,7 @@
-import { chunkContent } from "@/lib/chunking"
+import { chunkContent } from "@/actions/chunk-load/chunking"
 import { EmbeddingDocumentType } from "@/schema"
 import puppeteer from "puppeteer"
-import { createHash } from "./utils"
+import { createHash } from "../../lib/utils"
 
 const champsData = [
   "https://en.wikipedia.org/wiki/MindChamps",

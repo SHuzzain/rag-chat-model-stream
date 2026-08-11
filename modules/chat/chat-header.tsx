@@ -22,7 +22,7 @@ interface ChatHeaderProps {
 export function ChatHeader({ onReset, disabled }: ChatHeaderProps) {
   return (
     <CardHeader className="gap-1 border-b">
-      <CardTitle>RAG Chatbot</CardTitle>
+      <CardTitle>ChampsLms</CardTitle>
       <CardDescription>How can I help you today?</CardDescription>
       {onReset && (
         <CardAction>

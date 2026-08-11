@@ -69,26 +69,7 @@ export function MessageAnimated({
       {...props}
     >
       <Message align={isUser ? "end" : "start"}>
-        <MessageAvatar>
-          <Avatar className="size-8">
-            <AvatarFallback
-              className={
-                isUser
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-muted"
-              }
-            >
-              {isUser ? (
-                <UserIcon className="size-4" />
-              ) : (
-                <SparklesIcon className="size-4" />
-              )}
-            </AvatarFallback>
-          </Avatar>
-        </MessageAvatar>
         <MessageContent>
-
-
           {runningTool && (
             <Marker role="status">
               <MarkerIcon>

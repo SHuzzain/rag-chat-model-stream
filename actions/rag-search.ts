@@ -22,7 +22,6 @@ export async function ragSearch({
   topK?: number
 }): Promise<RagSearchResult[]> {
 
-
   const similarityScore = sql<number>`${cosineDistance(embeddingDocumentTable.embedding, queryEmbedding)}`;
 
   const results = await db

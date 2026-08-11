@@ -1,5 +1,5 @@
 import { generateSuggestions } from "@/actions/suggestion"
-import { streamRAGAgent } from "@/lib/rag-agent"
+import { streamRAGAgent } from "@/lib/agents/rag-agent"
 import { createUIMessageStream, createUIMessageStreamResponse, toUIMessageStream, UIMessage } from "ai"
 import { NextResponse, type NextRequest } from "next/server"
 
@@ -22,8 +22,6 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-
-
     return createUIMessageStreamResponse({
       stream: createUIMessageStream({
         execute: async ({ writer }) => {

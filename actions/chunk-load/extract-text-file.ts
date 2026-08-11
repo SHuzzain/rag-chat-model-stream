@@ -1,9 +1,9 @@
 "use server"
-import { chunkContent } from "@/lib/chunking"
-import { extractTextFromDocx } from "@/lib/extract-docx"
+import { chunkContent } from "@/actions/chunk-load/chunking"
+import { extractTextFromDocx } from "@/actions/chunk-load/extract-docx"
 import { EmbeddingDocumentType } from "@/schema"
 import path from "path"
-import { createHash } from "./utils"
+import { createHash } from "../../lib/utils"
 
 export async function loadDocTextFile() {
   try {

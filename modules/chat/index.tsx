@@ -16,6 +16,8 @@ import ChatSuggestions from "./chat-suggestions";
 export function ChatBot() {
   const { messages, status, isBusy, sendMessage, stop } = useChatBot();
 
+  console.log({ messages });
+
   return (
     <MessageScrollerProvider>
       <div className="relative flex flex-col gap-4">
