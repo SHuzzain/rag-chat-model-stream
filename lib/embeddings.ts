@@ -1,26 +1,26 @@
-import { embed, embedMany } from "ai"
-import { openai } from "@ai-sdk/openai"
+import { openai } from "@ai-sdk/openai";
+import { embed, embedMany } from "ai";
 
 export async function generateEmbedding(text: string) {
   //ex: "Hello\nWorld" -> Hello World
-  const input = text.replace("\n", " ")
+  const input = text.replace("\n", " ");
 
   const { embedding } = await embed({
     model: openai.embedding("text-embedding-3-small"),
     value: input,
-  })
+  });
 
-  return embedding
+  return embedding;
 }
 
 export async function generateEmbeddings(texts: string[]) {
   //ex: "Hello\nWorld" -> Hello World
-  const inputs = texts.map((text) => text.replace("\n", " "))
+  const inputs = texts.map((text) => text.replace("\n", " "));
 
   const { embeddings } = await embedMany({
     model: openai.embedding("text-embedding-3-small"),
     values: inputs,
-  })
+  });
 
-  return embeddings
+  return embeddings;
 }

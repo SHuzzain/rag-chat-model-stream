@@ -1,6 +1,9 @@
-import Openai from "openai"
-import "../envConfig"
+import Openai from "openai";
+
+import { envConfig } from "../lib/env";
 
 const openAi = new Openai({
-  apiKey: process.env.OPENAI_API_KEY,
-})
+  apiKey: envConfig.OPENAI_API_KEY,
+});
+
+void openAi;

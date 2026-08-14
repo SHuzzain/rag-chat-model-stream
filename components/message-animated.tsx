@@ -1,37 +1,34 @@
 "use client";
 
 import * as React from "react";
+
+import { UIMessage } from "ai";
 import { SparklesIcon, UserIcon, WrenchIcon } from "lucide-react";
 
-import { getMessageText } from "@/lib/ai";
-import { MessageScrollerItem } from "@/components/ui/message-scroller";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Bubble, BubbleContent } from "@/components/ui/bubble";
+import { Marker, MarkerContent, MarkerIcon } from "@/components/ui/marker";
 import {
   Message,
   MessageAvatar,
   MessageContent,
 } from "@/components/ui/message";
-import { Bubble, BubbleContent } from "@/components/ui/bubble";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import {
-  Marker,
-  MarkerIcon,
-  MarkerContent,
-} from "@/components/ui/marker";
+import { MessageScrollerItem } from "@/components/ui/message-scroller";
 import { Spinner } from "@/components/ui/spinner";
-import { UIMessage } from "ai";
+import { getMessageText } from "@/lib/ai";
+
 import { MemoizedMarkdown } from "./memoized-markdown";
 
-export interface MessageAnimatedProps
-  extends React.ComponentProps<typeof MessageScrollerItem> {
+export interface MessageAnimatedProps extends React.ComponentProps<
+  typeof MessageScrollerItem
+> {
   message: UIMessage;
   scrollAnchor?: boolean;
 }
 
 function getToolParts(message: UIMessage) {
   return message.parts.filter(
-    (part) =>
-      typeof part.type === "string" &&
-      part.type.startsWith("tool-")
+    (part) => typeof part.type === "string" && part.type.startsWith("tool-")
   );
 }
 
@@ -39,14 +36,9 @@ function getRunningTool(message: UIMessage) {
   return getToolParts(message).find((part) => {
     if (!("state" in part)) return false;
 
-    return (
-      part.state === "input-streaming" ||
-      part.state === "input-available"
-    );
+    return part.state === "input-streaming" || part.state === "input-available";
   });
 }
-
-
 
 export function MessageAnimated({
   message,
@@ -60,7 +52,6 @@ export function MessageAnimated({
   const runningTool = !isUser ? getRunningTool(message) : undefined;
 
   const toolName = runningTool?.type.replace(/^tool-/, "");
-
 
   return (
     <MessageScrollerItem
@@ -92,9 +83,7 @@ export function MessageAnimated({
               <MarkerContent>
                 {tool.type.replace(/^tool-/, "")}
 
-                {"state" in tool && (
-                  <> ({tool.state})</>
-                )}
+                {"state" in tool && <> ({tool.state})</>}
               </MarkerContent>
             </Marker>
           ))}
@@ -103,13 +92,13 @@ export function MessageAnimated({
             <Bubble>
               <BubbleContent>{text}</BubbleContent>
             </Bubble>
-          ) : text ?
+          ) : text ? (
             <MemoizedMarkdown
               key={`${message.id}-text`}
               id={message.id}
               content={text}
             />
-            : null}
+          ) : null}
         </MessageContent>
       </Message>
     </MessageScrollerItem>
