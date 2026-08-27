@@ -1,36 +1,40 @@
-import { and, eq } from "drizzle-orm";
+"use client";
 
-import { db } from "@/db";
-import { member, organization } from "@/db/schema";
-import { auth } from "@/lib/auth";
-import { requireOrgSession, requireSession } from "@/lib/session";
-import { headers } from "next/headers";
+import { useQuery } from "@tanstack/react-query";
 
-export async function getActiveOrganization() {
-  const { organizationId } = await requireOrgSession();
-  const [org] = await db
-    .select()
-    .from(organization)
-    .where(eq(organization.id, organizationId))
-    .limit(1);
-  return org ?? null;
+import {
+  getActiveOrganization,
+  getMembershipRole,
+  listUserOrganizations,
+} from "@/feature/org/actions/org.actions";
+import { orgCacheTags } from "@/feature/org/cache-tag";
+
+export function useActiveOrganization(
+  initialData?: Awaited<ReturnType<typeof getActiveOrganization>>
+) {
+  return useQuery({
+    queryKey: [orgCacheTags.list, "active"],
+    queryFn: () => getActiveOrganization(),
+    initialData,
+  });
 }
 
-export async function getMembershipRole() {
-  const { user, organizationId } = await requireOrgSession();
-  const [row] = await db
-    .select({ role: member.role })
-    .from(member)
-    .where(
-      and(eq(member.userId, user.id), eq(member.organizationId, organizationId))
-    )
-    .limit(1);
-  return row?.role ?? "member";
+export function useMembershipRole(
+  initialData?: Awaited<ReturnType<typeof getMembershipRole>>
+) {
+  return useQuery({
+    queryKey: [orgCacheTags.list, "role"],
+    queryFn: () => getMembershipRole(),
+    initialData,
+  });
 }
 
-export async function listUserOrganizations() {
-  await requireSession();
-  return auth.api.listOrganizations({
-    headers: await headers(),
+export function useUserOrganizations(
+  initialData?: Awaited<ReturnType<typeof listUserOrganizations>>
+) {
+  return useQuery({
+    queryKey: [orgCacheTags.list],
+    queryFn: () => listUserOrganizations(),
+    initialData,
   });
 }

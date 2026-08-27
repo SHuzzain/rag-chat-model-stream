@@ -1,12 +1,12 @@
 import { notFound } from "next/navigation";
 
 import { ChatbotBuilderView } from "@/feature/chatbots/components/chatbot-builder-view";
-import { getChatbotWithDeployment } from "@/feature/chatbots/queries/chatbots.queries";
+import { getChatbotWithDeployment } from "@/feature/chatbots/actions/chatbots.actions";
 import {
   listAttachedDocuments,
   listUnattachedKnowledge,
-} from "@/feature/knowledge/queries/knowledge.queries";
-import { getMembershipRole } from "@/feature/org/queries/org.queries";
+} from "@/feature/knowledge/actions/knowledge.actions";
+import { getMembershipRole } from "@/feature/org/actions/org.actions";
 import { canEditChatbots, canPublish } from "@/lib/permissions";
 
 export default async function ChatbotBuilderPage({

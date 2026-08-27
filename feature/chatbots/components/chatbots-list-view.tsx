@@ -20,6 +20,7 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { createChatbotAction } from "@/feature/chatbots/actions/chatbots.actions";
+import { useChatbots } from "@/feature/chatbots/queries/chatbots.queries";
 
 type ChatbotRow = {
   id: string;
@@ -29,7 +30,13 @@ type ChatbotRow = {
   updatedAt: Date;
 };
 
-export function ChatbotsListView({ chatbots }: { chatbots: ChatbotRow[] }) {
+export function ChatbotsListView({
+  chatbots: initialChatbots,
+}: {
+  chatbots: ChatbotRow[];
+}) {
+  const { data } = useChatbots();
+  const chatbots = data ?? initialChatbots;
   const [query, setQuery] = useState("");
   const [sort, setSort] = useState<"name" | "updated">("updated");
 

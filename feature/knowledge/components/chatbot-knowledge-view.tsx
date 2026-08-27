@@ -5,6 +5,10 @@ import { useState } from "react";
 import { attachKnowledgeAction } from "@/feature/knowledge/actions/ingest.actions";
 import { attachedColumns } from "@/feature/knowledge/components/knowledge-columns";
 import { UploadFileDialog } from "@/feature/knowledge/components/upload-file-dialog";
+import {
+  useAttachedDocuments,
+  useUnattachedKnowledge,
+} from "@/feature/knowledge/queries/knowledge.queries";
 import type { AttachableKnowledge, LibraryDocument } from "@/feature/knowledge/types";
 import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/data-table";
@@ -19,8 +23,8 @@ import {
 
 export function ChatbotKnowledgeView({
   chatbotId,
-  documents,
-  available,
+  documents: initialDocuments,
+  available: initialAvailable,
   canEdit,
 }: {
   chatbotId: string;
@@ -28,6 +32,10 @@ export function ChatbotKnowledgeView({
   available: AttachableKnowledge[];
   canEdit: boolean;
 }) {
+  const { data: attached } = useAttachedDocuments(chatbotId);
+  const { data: unattached } = useUnattachedKnowledge(chatbotId);
+  const documents = attached ?? initialDocuments;
+  const available = unattached ?? initialAvailable;
   const [selectedId, setSelectedId] = useState(available[0]?.knowledgeBaseId ?? "");
 
   return (

@@ -7,7 +7,7 @@ import {
 
 import { streamRAGAgent } from "@/feature/chat/agents/rag-agent";
 import { generateSuggestions } from "@/feature/chat/actions/suggestion.actions";
-import { saveMessage, saveUsageEvent } from "@/feature/chat/actions/persist";
+import { saveMessage, saveUsageEvent } from "@/feature/chat/actions/persist.actions";
 import { DEFAULT_SYSTEM_PROMPT } from "@/feature/chatbots/types";
 import type { ChatbotSnapshotConfig } from "@/feature/chatbots/types";
 

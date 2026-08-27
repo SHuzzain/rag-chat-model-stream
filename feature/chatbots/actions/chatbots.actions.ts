@@ -1,16 +1,21 @@
 "use server";
 
-import { and, eq } from "drizzle-orm";
+import { and, desc, eq } from "drizzle-orm";
 import { nanoid } from "nanoid";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, updateTag } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { db } from "@/db";
-import { chatbots } from "@/db/schema";
+import {
+  chatbotDeployments,
+  chatbotVersions,
+  chatbots,
+} from "@/db/schema";
+import { chatbotCacheTags } from "@/feature/chatbots/cache-tag";
 import { DEFAULT_CHATBOT_CONFIG } from "@/feature/chatbots/types";
+import { getMembershipRole } from "@/feature/org/actions/org.actions";
 import { canEditChatbots } from "@/lib/permissions";
 import { requireOrgSession } from "@/lib/session";
-import { getMembershipRole } from "@/feature/org/queries/org.queries";
 
 async function assertCanEdit() {
   const ctx = await requireOrgSession();
@@ -40,6 +45,8 @@ export async function createChatbotAction(formData: FormData) {
     createdBy: user.id,
   });
 
+  updateTag(chatbotCacheTags.list);
+  updateTag(chatbotCacheTags.get(id));
   revalidatePath("/chatbots");
   redirect(`/chatbots/${id}`);
 }
@@ -96,6 +103,8 @@ export async function updateChatbotAction(formData: FormData) {
     })
     .where(and(eq(chatbots.id, id), eq(chatbots.organizationId, organizationId)));
 
+  updateTag(chatbotCacheTags.list);
+  updateTag(chatbotCacheTags.get(id));
   revalidatePath(`/chatbots/${id}`);
   revalidatePath("/chatbots");
 }
@@ -129,6 +138,76 @@ export async function duplicateChatbotAction(chatbotId: string) {
     createdBy: user.id,
   });
 
+  updateTag(chatbotCacheTags.list);
+  updateTag(chatbotCacheTags.get(id));
   revalidatePath("/chatbots");
   return { id };
+}
+
+export async function listChatbots() {
+  const { organizationId } = await requireOrgSession();
+  return db
+    .select()
+    .from(chatbots)
+    .where(eq(chatbots.organizationId, organizationId))
+    .orderBy(desc(chatbots.updatedAt));
+}
+
+export async function getChatbot(id: string) {
+  const { organizationId } = await requireOrgSession();
+  const [bot] = await db
+    .select()
+    .from(chatbots)
+    .where(and(eq(chatbots.id, id), eq(chatbots.organizationId, organizationId)))
+    .limit(1);
+  return bot ?? null;
+}
+
+export async function getChatbotWithDeployment(id: string) {
+  const bot = await getChatbot(id);
+  if (!bot) return null;
+  const [deployment] = await db
+    .select()
+    .from(chatbotDeployments)
+    .where(eq(chatbotDeployments.chatbotId, bot.id))
+    .limit(1);
+  const versions = await db
+    .select()
+    .from(chatbotVersions)
+    .where(eq(chatbotVersions.chatbotId, bot.id))
+    .orderBy(desc(chatbotVersions.version));
+  return { bot, deployment: deployment ?? null, versions };
+}
+
+export async function getPublishedRuntimeByPublicId(publicBotId: string) {
+  const [deployment] = await db
+    .select()
+    .from(chatbotDeployments)
+    .where(eq(chatbotDeployments.publicBotId, publicBotId))
+    .limit(1);
+
+  if (!deployment || deployment.status !== "ACTIVE") return null;
+
+  const [bot] = await db
+    .select()
+    .from(chatbots)
+    .where(eq(chatbots.id, deployment.chatbotId))
+    .limit(1);
+
+  if (!bot?.isPublished || !bot.publishedVersion) return null;
+
+  const [version] = await db
+    .select()
+    .from(chatbotVersions)
+    .where(
+      and(
+        eq(chatbotVersions.chatbotId, bot.id),
+        eq(chatbotVersions.version, bot.publishedVersion)
+      )
+    )
+    .limit(1);
+
+  if (!version) return null;
+
+  return { bot, deployment, snapshot: version.configuration };
 }

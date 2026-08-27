@@ -2,7 +2,7 @@ import { AppShell } from "@/components/app-shell";
 import {
   getActiveOrganization,
   listUserOrganizations,
-} from "@/feature/org/queries/org.queries";
+} from "@/feature/org/actions/org.actions";
 import { requireOrgSession } from "@/lib/session";
 
 export default async function DashboardLayout({

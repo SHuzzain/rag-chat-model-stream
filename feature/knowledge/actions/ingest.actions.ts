@@ -2,7 +2,7 @@
 
 import { and, eq } from "drizzle-orm";
 import { nanoid } from "nanoid";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, updateTag } from "next/cache";
 
 import { db } from "@/db";
 import {
@@ -12,9 +12,9 @@ import {
   knowledgeBases,
 } from "@/db/schema";
 import { extractFileToDrafts } from "@/feature/knowledge/actions/extract-file";
-import { createLibraryKnowledgeBase } from "@/feature/knowledge/queries/knowledge.queries";
+import { knowledgeCacheTags } from "@/feature/knowledge/cache-tag";
 import type { ChunkDraft, KnowledgeFileType } from "@/feature/knowledge/types";
-import { getMembershipRole } from "@/feature/org/queries/org.queries";
+import { getMembershipRole } from "@/feature/org/actions/org.actions";
 import { generateEmbeddings } from "@/lib/embeddings";
 import { canEditChatbots } from "@/lib/permissions";
 import { requireOrgSession } from "@/lib/session";
@@ -34,6 +34,26 @@ async function assertCanEdit() {
   const role = await getMembershipRole();
   if (!canEditChatbots(role)) throw new Error("Forbidden");
   return ctx;
+}
+
+async function createLibraryKnowledgeBase(name: string) {
+  const { organizationId, user } = await requireOrgSession();
+  const [created] = await db
+    .insert(knowledgeBases)
+    .values({
+      id: nanoid(),
+      organizationId,
+      name,
+      createdBy: user.id,
+    })
+    .returning();
+  if (!created) throw new Error("Failed to create knowledge base");
+  return created;
+}
+
+function invalidateKnowledgeCache(chatbotId?: string) {
+  updateTag(knowledgeCacheTags.list);
+  if (chatbotId) updateTag(knowledgeCacheTags.attached(chatbotId));
 }
 
 async function attachKnowledgeBase({
@@ -131,6 +151,7 @@ async function persistChunks({
     revalidatePath(`/chatbots/${chatbotId}`);
   }
 
+  invalidateKnowledgeCache(chatbotId);
   revalidatePath("/knowledge");
 }
 
@@ -180,6 +201,7 @@ export async function attachKnowledgeAction(formData: FormData) {
   if (!kb) throw new Error("Knowledge not found");
 
   await attachKnowledgeBase({ chatbotId, knowledgeBaseId, organizationId });
+  invalidateKnowledgeCache(chatbotId);
   revalidatePath(`/chatbots/${chatbotId}`);
   revalidatePath("/knowledge");
 }
@@ -200,6 +222,7 @@ export async function detachKnowledgeAction(formData: FormData) {
       )
     );
 
+  invalidateKnowledgeCache(chatbotId);
   revalidatePath(`/chatbots/${chatbotId}`);
   revalidatePath("/knowledge");
 }
@@ -223,5 +246,6 @@ export async function deleteDocumentAction(formData: FormData) {
     .delete(knowledgeBases)
     .where(eq(knowledgeBases.id, document.knowledgeBaseId));
 
+  invalidateKnowledgeCache();
   revalidatePath("/knowledge");
 }

@@ -3,9 +3,9 @@ import { type NextRequest, NextResponse } from "next/server";
 import type { UIMessage } from "ai";
 
 import { createChatStreamResponse } from "@/feature/chat/actions/chat.actions";
-import { getConversation } from "@/feature/chat/actions/persist";
+import { getConversation } from "@/feature/chat/actions/persist.actions";
 import { isOriginAllowed } from "@/feature/chat/lib/origin";
-import { getPublishedRuntimeByPublicId } from "@/feature/chatbots/queries/chatbots.queries";
+import { getPublishedRuntimeByPublicId } from "@/feature/chatbots/actions/chatbots.actions";
 
 type ChatRequest = {
   lastMessage?: string;

@@ -19,6 +19,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { setActiveOrganizationAction } from "@/feature/org/actions/org.actions";
+import { useUserOrganizations } from "@/feature/org/queries/org.queries";
 import { ChevronsUpDownIcon, GalleryVerticalEndIcon, PlusIcon } from "lucide-react";
 
 export function TeamSwitcher({
@@ -34,8 +35,17 @@ export function TeamSwitcher({
 }) {
   const { isMobile } = useSidebar();
   const router = useRouter();
+  const { data: orgs } = useUserOrganizations();
+  const listed = Array.isArray(orgs) ? orgs : [];
+  const resolvedTeams = listed.length
+    ? listed.map((item) => ({
+        id: item.id,
+        name: item.name,
+        plan: item.slug || "Workspace",
+      }))
+    : teams;
   const activeTeam =
-    teams.find((team) => team.id === activeTeamId) ?? teams[0];
+    resolvedTeams.find((team) => team.id === activeTeamId) ?? resolvedTeams[0];
 
   if (!activeTeam) {
     return null;
@@ -72,7 +82,7 @@ export function TeamSwitcher({
               <DropdownMenuLabel className="text-xs text-muted-foreground">
                 Teams
               </DropdownMenuLabel>
-              {teams.map((team, index) => (
+              {resolvedTeams.map((team, index) => (
                 <DropdownMenuItem
                   key={team.id}
                   onClick={() => {

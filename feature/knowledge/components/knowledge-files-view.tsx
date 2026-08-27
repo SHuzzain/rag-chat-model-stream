@@ -5,15 +5,18 @@ import { FileStackIcon } from "lucide-react";
 import { DataTable } from "@/components/data-table";
 import { libraryColumns } from "@/feature/knowledge/components/knowledge-columns";
 import { UploadFileDialog } from "@/feature/knowledge/components/upload-file-dialog";
+import { useOrganizationDocuments } from "@/feature/knowledge/queries/knowledge.queries";
 import type { LibraryDocument } from "@/feature/knowledge/types";
 
 export function KnowledgeFilesView({
-  documents,
+  documents: initialDocuments,
   canEdit,
 }: {
   documents: LibraryDocument[];
   canEdit: boolean;
 }) {
+  const { data } = useOrganizationDocuments();
+  const documents = data ?? initialDocuments;
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-start justify-between gap-3">

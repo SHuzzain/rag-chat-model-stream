@@ -2,7 +2,7 @@
 
 import { and, eq } from "drizzle-orm";
 import { nanoid } from "nanoid";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, updateTag } from "next/cache";
 
 import { db } from "@/db";
 import {
@@ -10,8 +10,9 @@ import {
   chatbotVersions,
   chatbots,
 } from "@/db/schema";
+import { chatbotCacheTags } from "@/feature/chatbots/cache-tag";
 import type { ChatbotSnapshotConfig } from "@/feature/chatbots/types";
-import { getMembershipRole } from "@/feature/org/queries/org.queries";
+import { getMembershipRole } from "@/feature/org/actions/org.actions";
 import { canPublish } from "@/lib/permissions";
 import { requireOrgSession } from "@/lib/session";
 import { createHash } from "@/lib/utils";
@@ -89,6 +90,8 @@ export async function publishChatbotAction(chatbotId: string) {
     })
     .where(eq(chatbots.id, bot.id));
 
+  updateTag(chatbotCacheTags.list);
+  updateTag(chatbotCacheTags.get(chatbotId));
   revalidatePath(`/chatbots/${chatbotId}`);
   revalidatePath("/chatbots");
 }
@@ -128,6 +131,8 @@ export async function rollbackChatbotAction(chatbotId: string, version: number) 
       and(eq(chatbots.id, chatbotId), eq(chatbots.organizationId, organizationId))
     );
 
+  updateTag(chatbotCacheTags.list);
+  updateTag(chatbotCacheTags.get(chatbotId));
   revalidatePath(`/chatbots/${chatbotId}`);
 }
 
@@ -153,5 +158,7 @@ export async function updateDeploymentAction(formData: FormData) {
       )
     );
 
+  updateTag(chatbotCacheTags.list);
+  updateTag(chatbotCacheTags.get(chatbotId));
   revalidatePath(`/chatbots/${chatbotId}`);
 }

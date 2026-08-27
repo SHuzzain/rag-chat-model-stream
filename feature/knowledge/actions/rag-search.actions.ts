@@ -1,8 +1,10 @@
+"use server";
+
 import { and, asc, cosineDistance, eq, inArray, sql } from "drizzle-orm";
 
 import { db } from "@/db";
 import { documentChunks } from "@/db/schema";
-import { getAttachedKnowledgeBaseIdsForRuntime } from "@/feature/knowledge/queries/knowledge.queries";
+import { getAttachedKnowledgeBaseIdsForRuntime } from "@/feature/knowledge/actions/knowledge.actions";
 
 export type RagSearchResult = {
   id: string;

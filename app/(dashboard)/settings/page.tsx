@@ -1,4 +1,4 @@
-import { getActiveOrganization } from "@/feature/org/queries/org.queries";
+import { getActiveOrganization } from "@/feature/org/actions/org.actions";
 
 export default async function SettingsPage() {
   const org = await getActiveOrganization();

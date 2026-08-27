@@ -1,6 +1,6 @@
 import { KnowledgeFilesView } from "@/feature/knowledge/components/knowledge-files-view";
-import { listOrganizationDocuments } from "@/feature/knowledge/queries/knowledge.queries";
-import { getMembershipRole } from "@/feature/org/queries/org.queries";
+import { listOrganizationDocuments } from "@/feature/knowledge/actions/knowledge.actions";
+import { getMembershipRole } from "@/feature/org/actions/org.actions";
 import { canEditChatbots } from "@/lib/permissions";
 
 export default async function KnowledgePage() {

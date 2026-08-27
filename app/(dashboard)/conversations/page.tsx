@@ -1,4 +1,4 @@
-import { getUsageSummary } from "@/feature/usage/queries/usage.queries";
+import { getUsageSummary } from "@/feature/usage/actions/usage.actions";
 
 export default async function ConversationsPage() {
   const summary = await getUsageSummary();

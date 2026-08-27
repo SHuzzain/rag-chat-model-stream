@@ -1,3 +1,5 @@
+"use server";
+
 import { eq } from "drizzle-orm";
 import { nanoid } from "nanoid";
 
@@ -52,7 +54,7 @@ export async function saveMessage({
   return id;
 }
 
-export function estimateModelCost(inputTokens: number, outputTokens: number) {
+function estimateModelCost(inputTokens: number, outputTokens: number) {
   const providerCost =
     (inputTokens * 0.15 + outputTokens * 0.6) / 1_000_000;
   return { providerCost, customerCost: providerCost };

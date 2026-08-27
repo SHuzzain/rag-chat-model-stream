@@ -2,8 +2,8 @@ import { notFound } from "next/navigation";
 import { nanoid } from "nanoid";
 
 import { HostedChatView } from "@/feature/chat/components/hosted-chat-view";
-import { createConversation } from "@/feature/chat/actions/persist";
-import { getPublishedRuntimeByPublicId } from "@/feature/chatbots/queries/chatbots.queries";
+import { createConversation } from "@/feature/chat/actions/persist.actions";
+import { getPublishedRuntimeByPublicId } from "@/feature/chatbots/actions/chatbots.actions";
 
 export default async function HostedBotPage({
   params,

@@ -1,5 +1,5 @@
 import { ChatbotsListView } from "@/feature/chatbots/components/chatbots-list-view";
-import { listChatbots } from "@/feature/chatbots/queries/chatbots.queries";
+import { listChatbots } from "@/feature/chatbots/actions/chatbots.actions";
 
 export default async function ChatbotsPage() {
   const chatbots = await listChatbots();

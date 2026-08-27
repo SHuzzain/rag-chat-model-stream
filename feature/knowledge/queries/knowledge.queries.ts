@@ -1,116 +1,48 @@
-import { and, desc, eq, notInArray } from "drizzle-orm";
-import { nanoid } from "nanoid";
+"use client";
 
-import { db } from "@/db";
+import { useQuery } from "@tanstack/react-query";
+
 import {
-  chatbotKnowledgeBases,
-  documents,
-  knowledgeBases,
-} from "@/db/schema";
-import { requireOrgSession } from "@/lib/session";
+  listAttachedDocuments,
+  listOrganizationDocuments,
+  listUnattachedKnowledge,
+} from "@/feature/knowledge/actions/knowledge.actions";
+import { knowledgeCacheTags } from "@/feature/knowledge/cache-tag";
 
-export async function listOrganizationDocuments() {
-  const { organizationId } = await requireOrgSession();
-  return db
-    .select({
-      id: documents.id,
-      knowledgeBaseId: documents.knowledgeBaseId,
-      name: documents.name,
-      sourceType: documents.sourceType,
-      sourceUrl: documents.sourceUrl,
-      status: documents.status,
-      createdAt: documents.createdAt,
-    })
-    .from(documents)
-    .where(eq(documents.organizationId, organizationId))
-    .orderBy(desc(documents.createdAt));
-}
-
-export async function listAttachedDocuments(chatbotId: string) {
-  const { organizationId } = await requireOrgSession();
-  return db
-    .select({
-      id: documents.id,
-      knowledgeBaseId: documents.knowledgeBaseId,
-      name: documents.name,
-      sourceType: documents.sourceType,
-      sourceUrl: documents.sourceUrl,
-      status: documents.status,
-      createdAt: documents.createdAt,
-    })
-    .from(documents)
-    .innerJoin(
-      chatbotKnowledgeBases,
-      and(
-        eq(chatbotKnowledgeBases.knowledgeBaseId, documents.knowledgeBaseId),
-        eq(chatbotKnowledgeBases.chatbotId, chatbotId),
-        eq(chatbotKnowledgeBases.organizationId, organizationId)
-      )
-    )
-    .where(eq(documents.organizationId, organizationId))
-    .orderBy(desc(documents.createdAt));
-}
-
-export async function listUnattachedKnowledge(chatbotId: string) {
-  const { organizationId } = await requireOrgSession();
-  const attached = await db
-    .select({ knowledgeBaseId: chatbotKnowledgeBases.knowledgeBaseId })
-    .from(chatbotKnowledgeBases)
-    .where(
-      and(
-        eq(chatbotKnowledgeBases.chatbotId, chatbotId),
-        eq(chatbotKnowledgeBases.organizationId, organizationId)
-      )
-    );
-  const attachedIds = attached.map((row) => row.knowledgeBaseId);
-
-  const rows = await db
-    .select({
-      knowledgeBaseId: knowledgeBases.id,
-      name: documents.name,
-    })
-    .from(knowledgeBases)
-    .innerJoin(documents, eq(documents.knowledgeBaseId, knowledgeBases.id))
-    .where(
-      attachedIds.length > 0
-        ? and(
-            eq(knowledgeBases.organizationId, organizationId),
-            notInArray(knowledgeBases.id, attachedIds)
-          )
-        : eq(knowledgeBases.organizationId, organizationId)
-    )
-    .orderBy(desc(documents.createdAt));
-
-  return rows;
-}
-
-export async function getAttachedKnowledgeBaseIdsForRuntime(
-  chatbotId: string,
-  organizationId: string
+export function useOrganizationDocuments(
+  initialData?: Awaited<ReturnType<typeof listOrganizationDocuments>>
 ) {
-  const rows = await db
-    .select({ knowledgeBaseId: chatbotKnowledgeBases.knowledgeBaseId })
-    .from(chatbotKnowledgeBases)
-    .where(
-      and(
-        eq(chatbotKnowledgeBases.chatbotId, chatbotId),
-        eq(chatbotKnowledgeBases.organizationId, organizationId)
-      )
-    );
-  return rows.map((row) => row.knowledgeBaseId);
+  return useQuery({
+    queryKey: [knowledgeCacheTags.list],
+    queryFn: () => listOrganizationDocuments(),
+    initialData,
+  });
 }
 
-export async function createLibraryKnowledgeBase(name: string) {
-  const { organizationId, user } = await requireOrgSession();
-  const [created] = await db
-    .insert(knowledgeBases)
-    .values({
-      id: nanoid(),
-      organizationId,
-      name,
-      createdBy: user.id,
-    })
-    .returning();
-  if (!created) throw new Error("Failed to create knowledge base");
-  return created;
+export function useAttachedDocuments(
+  chatbotId: string,
+  initialData?: Awaited<ReturnType<typeof listAttachedDocuments>>
+) {
+  return useQuery({
+    queryKey: [knowledgeCacheTags.list, knowledgeCacheTags.attached(chatbotId)],
+    queryFn: () => listAttachedDocuments(chatbotId),
+    enabled: Boolean(chatbotId),
+    initialData,
+  });
+}
+
+export function useUnattachedKnowledge(
+  chatbotId: string,
+  initialData?: Awaited<ReturnType<typeof listUnattachedKnowledge>>
+) {
+  return useQuery({
+    queryKey: [
+      knowledgeCacheTags.list,
+      knowledgeCacheTags.attached(chatbotId),
+      "unattached",
+    ],
+    queryFn: () => listUnattachedKnowledge(chatbotId),
+    enabled: Boolean(chatbotId),
+    initialData,
+  });
 }

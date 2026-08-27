@@ -1,9 +1,9 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { nanoid } from "nanoid";
 
-import { createConversation } from "@/feature/chat/actions/persist";
+import { createConversation } from "@/feature/chat/actions/persist.actions";
 import { isOriginAllowed } from "@/feature/chat/lib/origin";
-import { getPublishedRuntimeByPublicId } from "@/feature/chatbots/queries/chatbots.queries";
+import { getPublishedRuntimeByPublicId } from "@/feature/chatbots/actions/chatbots.actions";
 
 export async function POST(request: NextRequest) {
   const body = (await request.json()) as { publicBotId?: string };

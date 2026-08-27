@@ -1,77 +1,44 @@
-import { and, desc, eq } from "drizzle-orm";
+"use client";
 
-import { db } from "@/db";
+import { useQuery } from "@tanstack/react-query";
+
 import {
-  chatbotDeployments,
-  chatbotVersions,
-  chatbots,
-} from "@/db/schema";
-import { requireOrgSession } from "@/lib/session";
+  getChatbot,
+  getChatbotWithDeployment,
+  listChatbots,
+} from "@/feature/chatbots/actions/chatbots.actions";
+import { chatbotCacheTags } from "@/feature/chatbots/cache-tag";
 
-export async function listChatbots() {
-  const { organizationId } = await requireOrgSession();
-  return db
-    .select()
-    .from(chatbots)
-    .where(eq(chatbots.organizationId, organizationId))
-    .orderBy(desc(chatbots.updatedAt));
+export function useChatbots(
+  initialData?: Awaited<ReturnType<typeof listChatbots>>
+) {
+  return useQuery({
+    queryKey: [chatbotCacheTags.list],
+    queryFn: () => listChatbots(),
+    initialData,
+  });
 }
 
-export async function getChatbot(id: string) {
-  const { organizationId } = await requireOrgSession();
-  const [bot] = await db
-    .select()
-    .from(chatbots)
-    .where(and(eq(chatbots.id, id), eq(chatbots.organizationId, organizationId)))
-    .limit(1);
-  return bot ?? null;
+export function useChatbot(
+  id: string,
+  initialData?: Awaited<ReturnType<typeof getChatbot>>
+) {
+  return useQuery({
+    queryKey: [chatbotCacheTags.list, chatbotCacheTags.get(id)],
+    queryFn: () => getChatbot(id),
+    enabled: Boolean(id),
+    initialData,
+  });
 }
 
-export async function getChatbotWithDeployment(id: string) {
-  const bot = await getChatbot(id);
-  if (!bot) return null;
-  const [deployment] = await db
-    .select()
-    .from(chatbotDeployments)
-    .where(eq(chatbotDeployments.chatbotId, bot.id))
-    .limit(1);
-  const versions = await db
-    .select()
-    .from(chatbotVersions)
-    .where(eq(chatbotVersions.chatbotId, bot.id))
-    .orderBy(desc(chatbotVersions.version));
-  return { bot, deployment: deployment ?? null, versions };
-}
-
-export async function getPublishedRuntimeByPublicId(publicBotId: string) {
-  const [deployment] = await db
-    .select()
-    .from(chatbotDeployments)
-    .where(eq(chatbotDeployments.publicBotId, publicBotId))
-    .limit(1);
-
-  if (!deployment || deployment.status !== "ACTIVE") return null;
-
-  const [bot] = await db
-    .select()
-    .from(chatbots)
-    .where(eq(chatbots.id, deployment.chatbotId))
-    .limit(1);
-
-  if (!bot?.isPublished || !bot.publishedVersion) return null;
-
-  const [version] = await db
-    .select()
-    .from(chatbotVersions)
-    .where(
-      and(
-        eq(chatbotVersions.chatbotId, bot.id),
-        eq(chatbotVersions.version, bot.publishedVersion)
-      )
-    )
-    .limit(1);
-
-  if (!version) return null;
-
-  return { bot, deployment, snapshot: version.configuration };
+export function useChatbotWithDeployment(
+  id: string,
+  initialData?: Awaited<ReturnType<typeof getChatbotWithDeployment>>
+) {
+  return useQuery({
+    queryKey: [chatbotCacheTags.list, chatbotCacheTags.get(id), "deployment"],
+    queryFn: () => getChatbotWithDeployment(id),
+    enabled: Boolean(id),
+    initialData,
+  });
 }

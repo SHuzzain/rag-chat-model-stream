@@ -1,7 +1,7 @@
 import { tool } from "ai";
 import z from "zod";
 
-import { ragSearch } from "@/feature/knowledge/queries/rag-search.queries";
+import { ragSearch } from "@/feature/knowledge/actions/rag-search.actions";
 import { generateEmbedding } from "@/lib/embeddings";
 
 export function createSearchKnowledgeBaseTool({

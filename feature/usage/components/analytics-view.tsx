@@ -1,17 +1,23 @@
-export function AnalyticsView({
-  summary,
-}: {
-  summary: {
-    conversations: number;
-    events: number;
-    inputTokens: number;
-    outputTokens: number;
-    totalTokens: number;
-    providerCost: number;
-    customerCost: number;
-    avgLatency: number;
-  };
-}) {
+"use client";
+
+import { useUsageSummary } from "@/feature/usage/queries/usage.queries";
+
+type UsageSummary = {
+  conversations: number;
+  events: number;
+  inputTokens: number;
+  outputTokens: number;
+  totalTokens: number;
+  providerCost: number;
+  customerCost: number;
+  avgLatency: number;
+};
+
+export function AnalyticsView({ summary: initialSummary }: { summary: UsageSummary }) {
+  const { data: summary = initialSummary } = useUsageSummary(
+    undefined,
+    initialSummary
+  );
   const stats = [
     { label: "Conversations", value: summary.conversations.toLocaleString() },
     { label: "Model requests", value: summary.events.toLocaleString() },
